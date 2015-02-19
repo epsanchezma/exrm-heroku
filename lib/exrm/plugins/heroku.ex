@@ -10,13 +10,13 @@ defmodule ReleaseManager.Plugin.Heroku do
   @_NAME          "{{{PROJECT_NAME}}}"
   @_PROCESS_TYPE  "{{{PROCESS_TYPE}}}"
 
-  def before_release(config) do
+  def before_release(%{heroku: true} = config) do
     config
     |> do_before_release_config
     |> do_copy_procfile
   end
 
-  def after_release(config) do
+  def after_release(%{heroku: true} = config) do
     config = config |> do_after_release_config
     slug_path = config |> do_unpack_release
     config |> do_release_slug(slug_path)
@@ -31,7 +31,7 @@ defmodule ReleaseManager.Plugin.Heroku do
   end
 
   def do_after_release_config(config) do
-    heroku_app = config |> get_config_item(:heroku_app, Mix.Project.config |> Keyword.get(:heroku_app))
+    heroku_app = config |> get_config_item(:app, config.name)
     slug_command = config |> get_config_item(:slug_command, "slug")
 
     config |> Map.merge(%{heroku_app: heroku_app, slug_command: slug_command})
@@ -126,7 +126,7 @@ defmodule ReleaseManager.Plugin.Heroku do
   end
 
   defp get_config_item(config, item, default) do
-    app = :erlang.binary_to_atom(config.name, :utf8)
-    config |> Map.get(item, Application.get_env(app, item, default))
+    project_config = Mix.Project.config |> Keyword.get(:heroku)
+    config |> Map.get(item, Keyword.get(project_config, item, default))
   end
 end
