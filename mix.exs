@@ -2,7 +2,7 @@ defmodule ExrmHeroku.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :"exrm-heroku",
+    [app: :exrm_heroku,
      version: "0.1.0",
      elixir: "~> 1.0-dev",
      description: description,
