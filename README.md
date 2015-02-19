@@ -15,6 +15,8 @@ This project's goal is to make publishing an Elixir release to HEROKU very simpl
 
 - `go get github.com/naaman/slug/cmd/slug`
 
+Note: soon this will be replaced with a pure Elixir lib.
+
 #### Add exrm_heroku as a dependency to your project
 
 ```elixir
