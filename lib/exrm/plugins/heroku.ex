@@ -105,6 +105,7 @@ defmodule ReleaseManager.Plugin.Heroku do
   end
 
   defp execute_slug(command, args) do
+    IO.puts "Executing: #{command} #{Enum.join(args, " ")}"
     case System.cmd(command, args) do
       {:error, :enoent} ->
         IO.puts """
@@ -114,7 +115,7 @@ defmodule ReleaseManager.Plugin.Heroku do
       {:error, error} ->
         IO.puts "Error #{inspect(error)} executing the slug command."
       {output, _} ->
-        IO.puts "Command slug executed, output: \n#{output}"
+        IO.puts "Command executed, output: \n#{output}"
         output
     end
   end
