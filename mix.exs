@@ -21,7 +21,7 @@ defmodule ExrmHeroku.Mixfile do
   end
 
   defp deps do
-    [{:exrm, "~> 0.15.0"}]
+    [{:exrm, github: "guilleiguaran/exrm", branch: "fix-repackage"}]
   end
 
   defp package do
