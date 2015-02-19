@@ -1,2 +1,2 @@
 %{"conform": {:hex, :conform, "0.13.0"},
-  "exrm": {:hex, :exrm, "0.15.0"}}
+  "exrm": {:git, "git://github.com/guilleiguaran/exrm.git", "341108b3bc1b0ec6c2d1de9225413cfc05364d6f", [branch: "fix-repackage"]}}

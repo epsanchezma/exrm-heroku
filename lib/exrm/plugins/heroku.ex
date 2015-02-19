@@ -12,28 +12,29 @@ defmodule ReleaseManager.Plugin.Heroku do
 
   def before_release(config) do
     config
-    |> do_config
+    |> do_before_release_config
     |> do_copy_procfile
   end
 
   def after_release(config) do
+    config = config |> do_after_release_config
     slug_path = config |> do_unpack_release
     config |> do_release_slug(slug_path)
   end
 
   def after_cleanup(_), do: nil
 
-  def do_config(config) do
+  def do_before_release_config(config) do
     process_type = config |> get_config_item(:process_type, "web")
+
+    config |> Map.merge(%{process_type: process_type})
+  end
+
+  def do_after_release_config(config) do
     heroku_app = config |> get_config_item(:heroku_app, Mix.Project.config |> Keyword.get(:heroku_app))
     slug_command = config |> get_config_item(:slug_command, "slug")
 
-    config
-    |> Map.merge(%{
-      process_type:    process_type,
-      heroku_app:      heroku_app,
-      slug_command:    slug_command
-    })
+    config |> Map.merge(%{heroku_app: heroku_app, slug_command: slug_command})
   end
 
   defp do_copy_procfile(config) do
@@ -59,6 +60,8 @@ defmodule ReleaseManager.Plugin.Heroku do
     updated = Utils.merge(relx_config, overlays)
     # Persist relx.config
     Utils.write_terms(relx_conf_path, updated)
+
+    config
   end
 
   defp do_generate_procfile(config) do
@@ -117,6 +120,7 @@ defmodule ReleaseManager.Plugin.Heroku do
   end
 
   defp template_path(filename) do
+    priv_path = :code.priv_dir('exrm_heroku')
     Path.join([priv_path, "rel", "files", filename])
   end
 
