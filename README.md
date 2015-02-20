@@ -9,11 +9,13 @@ You can publish your app at the same time as building a release by adding the `-
 
 ## Getting Started
 
-This project's goal is to make publishing an Elixir release to HEROKU very simple. To get started:
+This project's goal is to make publishing an Elixir release to Heroku very simple using Heroku Slug API. To get started:
 
 #### Install slug command line tool:
 
 - `go get github.com/naaman/slug/cmd/slug`
+
+[Read more about Slug](https://github.com/naaman/slug)
 
 Note: soon this will be replaced with a pure Elixir lib.
 
