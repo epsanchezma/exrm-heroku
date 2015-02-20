@@ -28,6 +28,6 @@ defmodule ExrmHeroku.Mixfile do
     [ files: ["lib", "priv", "mix.exs", "README.md", "LICENSE"],
       contributors: ["Guillermo Iguaran"],
       licenses: ["MIT"],
-      links: [ { "GitHub", "https://github.com/ride/exrm-heroku" } ] ]
+      links: %{"GitHub" => "https://github.com/ride/exrm-heroku"} ]
   end
 end
