@@ -21,7 +21,7 @@ defmodule ExrmHeroku.Mixfile do
   end
 
   defp deps do
-    [{:exrm, []}]
+    [{:exrm, ">= 0.15.0"}]
   end
 
   defp package do
