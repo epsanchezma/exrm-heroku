@@ -3,7 +3,7 @@ defmodule ExrmHeroku.Mixfile do
 
   def project do
     [app: :exrm_heroku,
-     version: "0.1.0",
+     version: "0.1.1",
      elixir: "~> 1.0-dev",
      description: description,
      package: package,
