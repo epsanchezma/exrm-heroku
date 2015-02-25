@@ -16,11 +16,15 @@ defmodule ReleaseManager.Plugin.Heroku do
     |> do_copy_procfile
   end
 
+  def before_release(_), do: nil
+
   def after_release(%{heroku: true} = config) do
     config = config |> do_after_release_config
     slug_path = config |> do_unpack_release
     config |> do_release_slug(slug_path)
   end
+
+  def after_release(_), do: nil
 
   def after_cleanup(_), do: nil
 
