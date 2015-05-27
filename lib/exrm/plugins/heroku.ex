@@ -92,7 +92,7 @@ defmodule ReleaseManager.Plugin.Heroku do
 
   defp do_release_slug(config, slug_dir) do
     heroku_app = config.heroku_app
-    args =  ["-dir", slug_dir, "-app", heroku_app, "-release"]
+    args =  ["--app", heroku_app, "--dir", slug_dir, "--release"]
     execute_slug(config.slug_command, args)
   end
 
