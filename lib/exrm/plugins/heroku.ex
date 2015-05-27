@@ -92,8 +92,25 @@ defmodule ReleaseManager.Plugin.Heroku do
 
   defp do_release_slug(config, slug_dir) do
     heroku_app = config.heroku_app
-    args =  ["-dir", slug_dir, "-app", heroku_app, "-release"]
-    execute_slug(config.slug_command, args)
+
+    procfile_path = Path.join([File.cwd!, "Procfile"])
+    {:ok, process_types} = Exlug.Procfile.parse(procfile_path)
+
+    IO.write "Initializing slug for #{slug_dir}..."
+    slug = Exlug.Slug.create(netrc_key, heroku_app, slug_dir, process_types)
+    IO.write "done\n"
+
+    IO.write "Archiving #{slug_dir}..."
+    slug = Exlug.Slug.archive(slug)
+    IO.write "done\n"
+
+    IO.write "Pushing #{slug.tar_file}..."
+    Exlug.Slug.push(slug)
+    IO.write "done\n"
+
+    IO.write "Releasing..."
+    release = Exlug.Slug.release(slug)
+    IO.write "done (v#{release.version})\n"
   end
 
   defp create_tmp_dir(config) do
@@ -108,22 +125,6 @@ defmodule ReleaseManager.Plugin.Heroku do
     end
   end
 
-  defp execute_slug(command, args) do
-    IO.puts "Executing: #{command} #{Enum.join(args, " ")}"
-    case System.cmd(command, args) do
-      {:error, :enoent} ->
-        IO.puts """
-          slug command wasn't found, please install it and try again.
-          Check https://github.com/naaman/slug for more info.
-        """
-      {:error, error} ->
-        IO.puts "Error #{inspect(error)} executing the slug command."
-      {output, _} ->
-        IO.puts "Command executed, output: \n#{output}"
-        output
-    end
-  end
-
   defp template_path(filename) do
     priv_path = :code.priv_dir('exrm_heroku')
     Path.join([priv_path, "rel", "files", filename])
@@ -132,5 +133,9 @@ defmodule ReleaseManager.Plugin.Heroku do
   defp get_config_item(config, item, default) do
     project_config = Mix.Project.config |> Keyword.get(:heroku)
     config |> Map.get(item, Keyword.get(project_config, item, default))
+  end
+
+  defp netrc_key do
+    Netrc.read["api.heroku.com"]["password"]
   end
 end

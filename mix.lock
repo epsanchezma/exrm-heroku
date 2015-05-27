@@ -1,2 +1,11 @@
 %{"conform": {:hex, :conform, "0.13.0"},
-  "exrm": {:hex, :exrm, "0.15.0"}}
+  "exjsx": {:hex, :exjsx, "3.1.0"},
+  "exlug": {:git, "git://github.com/ride/exlug.git", "01474e8e32298c66b539a57e74e01cf49b11bdf0", []},
+  "exrm": {:hex, :exrm, "0.15.0"},
+  "hackney": {:hex, :hackney, "1.1.0"},
+  "httpoison": {:hex, :httpoison, "0.6.2"},
+  "idna": {:hex, :idna, "1.0.2"},
+  "jsx": {:hex, :jsx, "2.4.0"},
+  "netrc": {:hex, :netrc, "0.0.2"},
+  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.4"},
+  "yamerl": {:git, "git://github.com/yakaz/yamerl.git", "ae810a808817d9482b4628ae3e20d746e3729fe0", []}}

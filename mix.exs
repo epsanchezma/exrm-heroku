@@ -21,7 +21,9 @@ defmodule ExrmHeroku.Mixfile do
   end
 
   defp deps do
-    [{:exrm, ">= 0.15.0"}]
+    [{:exrm, ">= 0.15.0"},
+     {:exlug, github: "ride/exlug"},
+     {:netrc, "~> 0.0.1"}]
   end
 
   defp package do
