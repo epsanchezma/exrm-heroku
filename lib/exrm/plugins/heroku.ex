@@ -93,7 +93,7 @@ defmodule ReleaseManager.Plugin.Heroku do
   defp do_release_slug(config, slug_dir) do
     heroku_app = config.heroku_app
 
-    procfile_path = Path.join([File.cwd!, "Procfile"])
+    procfile_path = Path.expand(Path.join([File.cwd!, "Procfile"]))
     {:ok, process_types} = Exlug.Procfile.parse(procfile_path)
 
     IO.write "Initializing slug for #{slug_dir}..."
