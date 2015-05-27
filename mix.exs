@@ -11,7 +11,7 @@ defmodule ExrmHeroku.Mixfile do
   end
 
   def application do
-    [applications: []]
+    [applications: [:yamerl]]
   end
 
   defp description do
